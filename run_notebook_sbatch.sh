@@ -16,7 +16,7 @@ module load python/3.11.7
 module load cuda/12.2 
 module load gcc/12.2.0  
 
-source /leonardo_work/cin_staff/mcelori1/ML4Astrophysics/pyvenv/bin/activate
+source /leonardo_work/cin_staff/mcelori1/ML4Astrophysics/pyvenv_ml_gpu/bin/activate
 
 # Get the worker list associated to this slurm job
 worker_list=($(scontrol show hostnames "$SLURM_JOB_NODELIST"))
