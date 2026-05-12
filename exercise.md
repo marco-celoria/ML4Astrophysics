@@ -2,190 +2,163 @@
 
 ## Overview
 
-In this assignment you will build a machine learning pipeline to classify astronomical spectra from the Sloan Digital Sky Survey (SDSS).
+In this assignment, you will explore the classification of astronomical spectra from the Sloan Digital Sky Survey (SDSS) using machine learning techniques.
 
-You will work with spectroscopic observations from SDSS Data Release 16 and train models to distinguish between different classes of astronomical objects using their spectra.
+You will work with real spectroscopic data from SDSS Data Release 16 and investigate how different types of astronomical objects can be distinguished based on their spectral signatures.
 
-The assignment combines:
-
-* exploratory data analysis
-* dimensionality reduction
-* supervised machine learning
-* model evaluation
-* scientific interpretation
-
-You are encouraged to think critically about both the machine learning methodology and the astrophysical meaning of the results.
+Rather than following a strict recipe, you are encouraged to explore different preprocessing strategies, visualization choices, and modeling approaches. The goal is to develop both a working classification pipeline and an understanding of the underlying data.
 
 ---
 
-# Learning Objectives
+## Learning Objectives
 
-By the end of this assignment you should be able to:
+By completing this assignment, you should be able to:
 
-* Load and inspect astronomical spectral data
-* Visualize high-dimensional spectra
-* Apply preprocessing and normalization techniques
-* Use PCA for dimensionality reduction and interpretation
-* Build reproducible ML pipelines using scikit-learn
-* Perform hyperparameter optimization with cross-validation
-* Evaluate multiclass classification models
-* Interpret confusion matrices and classification metrics
+- Load and explore high-dimensional scientific datasets
+- Visualize and interpret astronomical spectra
+- Apply preprocessing and scaling techniques appropriately
+- Use PCA for dimensionality reduction and exploratory analysis
+- Build end-to-end machine learning pipelines with scikit-learn
+- Train at least one supervised classification model
+- Evaluate model performance using standard metrics
+- Interpret results using confusion matrices and classification reports
 
 ---
 
-# Dataset
+## Dataset
 
-The dataset contains SDSS spectra stored as NumPy arrays:
+You are provided with SDSS spectra stored as NumPy arrays:
 
-* `data.npy`
+- `data.npy`  
+  Spectral flux values  
+  Shape: `(N_samples, N_wavelength_bins)`
 
-  * spectral flux values
-  * shape: `(N_samples, N_wavelength_bins)`
+- `labels.npy`  
+  Integer class labels
 
-* `labels.npy`
+- `wavelengths.npy`  
+  Wavelength grid in Ångström
 
-  * integer class labels
-
-* `wavelengths.npy`
-
-  * wavelength values in Ångström
-
-The dataset contains the following classes:
+The dataset includes three classes:
 
 | Label | Class  |
-| ----- | ------ |
+|------:|--------|
 | 0     | AGN    |
 | 1     | galaxy |
 | 2     | QSO    |
 
 ---
 
-# Background
+## Background
 
-The Sloan Digital Sky Survey (SDSS) is one of the largest astronomical surveys ever conducted.
+The Sloan Digital Sky Survey (SDSS) is one of the largest astronomical surveys ever conducted, providing spectra for millions of celestial objects.
 
-Astronomical spectra contain information about:
+Astronomical spectra encode physical information such as:
+- chemical composition
+- temperature
+- redshift
+- emission and absorption line structure
 
-* chemical composition
-* temperature
-* velocity
-* redshift
-* emission and absorption features
-
-Machine learning methods can classify astronomical sources directly from their spectra.
+In this assignment, you will investigate how such information can be used for automatic classification.
 
 ---
 
-# Part 1 — Data Loading and Inspection
+## Suggested Workflow
 
-## Tasks
+You are free to design your own approach, but your final solution should include the following components:
 
-1. Load the dataset using NumPy.
-2. Print:
+### 1 — Data Exploration
 
-   * data shape
-   * label shape
-   * wavelength shape
-3. Compute the number of samples in each class.
-4. Verify whether the dataset is balanced.
+Load and inspect the dataset.
 
----
-
-# Part 2 — Spectral Visualization
-
-## Tasks
-
-1. Plot one random spectrum from each class.
-2. Label:
-
-   * x-axis
-   * y-axis
-   * title
-3. Compute and plot:
-
-   * mean spectrum per class
-   * ±1 standard deviation region
-4. Plot the global mean spectrum across the full dataset.
-
-## Questions
-
-1. Do the classes appear visually separable?
-2. Which wavelength regions appear most different between classes?
-3. What are some limitations of visual inspection in high-dimensional datasets?
+You may want to:
+- examine shapes and class distribution
+- check for imbalance
+- visualize example spectra
 
 ---
 
-# Part 3 — Exploratory PCA Analysis
+### 2 — Spectral Visualization
 
-## Tasks
+Explore the data visually.
 
-1. Split the dataset into:
+Possible directions include:
+- plotting individual spectra from different classes
+- comparing mean spectra across classes
+- visualizing variability (e.g. standard deviation bands)
 
-   * training set
-   * independent test set
-
-2. Normalize the spectra using L2 normalization.
-
-3. Apply PCA with:
-
-   * `n_components=5`
-
-4. Visualize:
-
-   * projection onto the first two principal components
-   * explained variance ratio
-   * first two eigenspectra
-
-## Questions
-
-1. What fraction of variance is explained by the first components?
-2. Are the classes separated in PCA space?
-3. What physical properties might the first principal component represent?
-4. Why is PCA useful for high-dimensional spectral data?
+Try to develop an intuition for how spectra differ between classes.
 
 ---
 
-# Part 4 — Machine Learning Pipeline
+### 3 — Preprocessing and PCA
 
-## Tasks
+Experiment with preprocessing techniques such as:
+- normalization or scaling
 
-Build a scikit-learn pipeline containing:
+Then apply PCA to:
+- reduce dimensionality
+- visualize the dataset in 2D or 3D
+- inspect eigen-spectra and explained variance
 
-* spectral normalization
-* classifier
-
-You must evaluate at least two of the following models:
-
-1. Logistic Regression
-2. Random Forest
-3. XGBoost
+You may choose preprocessing and PCA settings freely.
 
 ---
 
-# Part 5 — Model Evaluation
+### 4 — Classification Model
 
-## Tasks
+Build a machine learning pipeline that includes:
+- preprocessing step(s)
+- optional dimensionality reduction
+- a supervised classifier
 
-Evaluate the best model on the untouched test set.
+You are required to train at least one model. You may explore any of the following:
+- Logistic Regression
+- Random Forest
+- Gradient Boosting (e.g. XGBoost)
+- or other scikit-learn compatible classifiers
 
-Compute:
-
-* accuracy
-* macro F1-score
-* confusion matrix
-* classification report
-
-## Questions
-
-1. Which classes are easiest to classify?
-2. Which classes are most frequently confused?
+Hyperparameter tuning and cross-validation are optional but encouraged.
 
 ---
 
-# References
+### 5 — Evaluation
 
-* The Sloan Digital Sky Survey: [SDSS Official Website](https://www.sdss.org/?utm_source=chatgpt.com)
-* scikit-learn documentation: [scikit-learn](https://scikit-learn.org/stable/?utm_source=chatgpt.com)
-* XGBoost documentation: [XGBoost Documentation](https://xgboost.readthedocs.io/en/stable/?utm_source=chatgpt.com)
-* Yip et al. (2004), *Spectral Classification of Quasars in the Sloan Digital Sky Survey*
+Evaluate your final model on a held-out test set.
 
+Report:
+- accuracy
+- macro F1-score
+- confusion matrix
+- classification report
+
+---
+
+## Final Goal
+
+Your final submission should include:
+
+- a trained classification pipeline
+- a PCA-based visualization of the dataset
+- evaluation results on a test set
+- a brief interpretation of your findings
+
+---
+
+## Optional Extensions (Not Required)
+
+If you want to go further, you may explore:
+- different scaling strategies (StandardScaler vs Normalizer)
+- nonlinear dimensionality reduction (t-SNE, UMAP)
+- feature importance analysis
+- comparison of multiple models
+- error analysis on misclassified spectra
+
+---
+
+## References
+
+- Sloan Digital Sky Survey (SDSS): https://www.sdss.org/
+- scikit-learn documentation: https://scikit-learn.org/
+- XGBoost documentation: https://xgboost.readthedocs.io/
+- Yip et al. (2004), *Spectral Classification of Quasars in SDSS: Eigenspectra, Redshift, and Luminosity Effects*
