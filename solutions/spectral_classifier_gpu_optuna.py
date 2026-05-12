@@ -87,10 +87,10 @@ for i,cls in enumerate(np.unique(labels)):
     idx = np.where(labels == cls)[0]
     n = rng.choice(idx)
     axs[i].plot(wavelengths, data[n], label=f"{CLASS_NAMES[labels[n]]}")
-    axs[i].set_xlabel('wavelength(Å)')
-    axs[i].set_title(f"{n} - {class_names[labels[n]]}")
+    axs[i].set_xlabel('wavelength')
+    axs[i].set_title(f"{n} - {CLASS_NAMES[labels[n]]}")
     
-axs[0].set_ylabel('flux (10-17 erg/s/cm2/Å)')
+axs[0].set_ylabel('flux)')
 save_plot("random_spectra.png")
 
 fig, axs = plt.subplots(2, 2, figsize=(12,12))
@@ -100,24 +100,24 @@ for i in (0, 1, 2):
     idx = np.where(labels == i)[0]
     mu = data[idx].mean(0)
     std = data[idx].std(0)
-    l = axs[i].plot(wavelengths, mu, label=f"{class_names[i]}", color=colors[i])
+    l = axs[i].plot(wavelengths, mu, label=f"{CLASS_NAMES[i]}", color=colors[i])
     axs[i].fill_between(wavelengths, mu - std, mu + std, color=colors[i], alpha=0.3)
-    axs[i].set_xlabel('wavelength (Å)')
+    axs[i].set_xlabel('wavelength')
     axs[i].set_ylim(-40, 80)
-    axs[i].set_title(f"{class_names[i]}")
+    axs[i].set_title(f"{CLASS_NAMES[i]}")
     
-axs[0].set_ylabel('flux (10-17 erg/s/cm2/Å)')
-axs[2].set_ylabel('flux (10-17 erg/s/cm2/Å)')
+axs[0].set_ylabel('flux')
+axs[2].set_ylabel('flux')
 axs[-1].plot(wavelengths, data.mean(0), label=f"mean", color="black")
 axs[-1].fill_between(wavelengths, data.mean(0) - data.std(0), data.mean(0) + data.std(0), color="grey", alpha=0.3)
-axs[-1].set_xlabel('wavelength (Å)')
+axs[-1].set_xlabel('wavelength')
 axs[-1].set_ylim(-40, 80)
 axs[-1].set_title("mean")
 save_plot("mean_spectra.png")
 
 # Maps the integer labels to their actual string names for the plot
-mapped_labels = [class_names[i] for i in labels]
-sns.countplot(x=mapped_labels, order=class_names)
+mapped_labels = [CLASS_NAMES[i] for i in labels]
+sns.countplot(x=mapped_labels, order=CLASS_NAMES)
 plt.title("Class Distribution")
 save_plot("class_distribution.png")
 
@@ -455,7 +455,7 @@ best_model = Pipeline(steps)
 best_model.fit(X_train_gdf, y_train_gdf)
 
 model_file = os.path.join(MODEL_DIR, "best_spectrum_classifier_gpu.pkl")
-joblib.dump(best_pipeline, model_file)
+joblib.dump(best_model, model_file)
 print(f"Model saved to {model_file}")
 
 # --- 7. Evaluation ---

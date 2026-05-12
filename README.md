@@ -1,12 +1,14 @@
 # ML4Astrophysics
 
 
-module load python cuda gcc 
+module load python gcc 
 python -m venv pyvenv_ml_cpu --system-site-packages
 source pyvenv_ml_cpu/bin/activate
 pip install -r requirements_cpu.txt
 deactivate
+module purge
 
+module load python cuda gcc 
 python -m venv pyvenv_ml_gpu --system-site-packages
 source pyvenv_ml_gpu/bin/activate
 pip install -r requirements_cpu.txt
